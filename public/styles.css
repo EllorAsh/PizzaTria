@@ -79,13 +79,13 @@ body{
     text-align: center;
 }
 
-.currentSpecialsContainer{
+.currentSpecialsContainer, .pizzasContainer{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     padding-bottom: 20px;
 }
-.currentSpecialCard{
+.currentSpecialCard, .pizzaCard{
     display: flex;
     flex-direction: column;
     background-color: #646363;
@@ -99,7 +99,7 @@ body{
     justify-content: center;
     align-items: center;
 }
-.currentSpecialCard:hover{
+.currentSpecialCard:hover, .pizzaCard:hover{
     background-color:#E88D38;
     .pizzaDescription{
         opacity: 100%;
@@ -110,6 +110,8 @@ body{
     }
 }
 .pizzaDescription{
+    width:170px;
+    position: absolute;
     height: fit-content;
     opacity: 0;
     background: rgba(180, 83, 24,0.8);

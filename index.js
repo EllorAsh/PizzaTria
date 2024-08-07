@@ -27,11 +27,24 @@ app.get("/home", (req, res)=>{
     res.render("home.ejs")
 });
 
-app.get("/menu", (req, res)=>{
-    res.render("menu.ejs")
+app.get("/menu", async (req, res)=>{
+    const Pizzas= await getPizzas();
+    res.render("menu.ejs",{
+        pizzas:Pizzas
+    })
 });
 
 
 app.listen(port, ()=>{
   console.log("Server running on port "+ port);
 })
+
+// Functions
+async function getPizzas(){
+    const result = await db.query("SELECT * FROM pizzas");
+    let allPizzas = [];
+    result.rows.forEach((pizza) => {
+        allPizzas.push(pizza);
+    });
+    return allPizzas;
+}

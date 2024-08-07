@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Menu</title>
         <!-- Styles -->
         <link rel="stylesheet" href="./styles.css"/>
 
@@ -31,5 +31,37 @@
         </div>
     </div>
     <h>This is the menu</h>
+    <div class="Specials">
+        <div class="SpecialsText">
+            <p class="SpecialsTop">
+                boe
+
+                hhhah
+                hshsh<br/>
+                hhgdhhdhh
+            </p>
+            <div class="PizzaList">
+                <h1>Try our Specials</h1>
+                <div class="pizzasContainer">
+                    <%if(pizzas){%>
+                        <%pizzas.forEach(pizza => {%>
+                            <div class="pizzaCard">
+                                <a href="...">
+                                    <img class="cardImage" src="./Assets/<%=pizza.name%>_nbg.png">
+                                    <p class="pizzaDescription"><%=pizza.name%></p>
+                                </a>                     
+                                <p class="pizzaName"><%=pizza.name%></p>
+                                <div class="cardPrice">
+                                    <p class="pizzaPrice">R<%=pizza.price%></p>
+                                    <a href="..." class="orderNowButton">Order now</a>
+                                </div>   
+                            </div>                            
+                        <%})%>
+                    <%}%>
+
+                </div>
+            </div>
+        </div>
+        <script src="index.js" charset="UTF-8"></script>
 </body>
 </html>
