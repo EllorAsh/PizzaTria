@@ -4,7 +4,7 @@ import pg from "pg";
 import bodyParser from "body-parser";
 import env from "dotenv";
 
-
+env.config();
 const db = new pg.Client({
     user: process.env.PG_USER,
     host: process.env.PG_HOST,
