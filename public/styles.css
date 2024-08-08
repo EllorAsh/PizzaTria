@@ -8,6 +8,12 @@ body{
     font-weight: 400;
     font-style: normal;
 }
+.pinyon-script-regular {
+    font-family: "Pinyon Script", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+  
 .Navbar{
     display: flex;
     justify-content: space-between;
@@ -77,8 +83,9 @@ body{
 }
 .SpecialsTop{
     background-color:#B45318;
-    height: 50px; 
+    height: 30px; 
     padding: 20px;
+    margin: 0px;
 }
 .SpecialsText{
     height: fit-content;
@@ -166,18 +173,20 @@ body{
     color: white;
     text-decoration: none;
 }
-.homePageImg1{
-    width: 100vw;
-}
-.visitMenuH{
+.visitMenu{
     text-align: center;
-    height: 100px;
-    font-size: 20pt;
+    height: 60px;
     margin: 0px;
     background-color: #2f3335;
     padding-top: 10px;
     position: relative;
     top: -5px;
+}
+.visitMenuH{
+    font-size: 50pt;
+    position: relative;
+    top: -80px;
+    color: whitesmoke;
 }
 .menuView{
     background: image-set("./Assets/HomePagePizza_img5.png");
@@ -199,6 +208,31 @@ body{
     border-radius: 50%;
     align-content: center;
 }
+.aboutUsContainer{
+    background-color: #2f3335;
+}
+.aboutUsImg, .homePageImg{
+    width: 100%;
+    margin: 0px;
+}
+.aboutUsInfo{
+    margin: 0px;
+    
+}
+.aboutUsH{
+    margin: 0px;
+    text-align: center;
+    color: whitesmoke;
+    margin: 10px;
+}
+.aboutUsB{
+    margin: 0px;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: whitesmoke;
+    padding: 10px;
+    padding-bottom: 20px;
+}
 
 /* Animations */
 @keyframes rotate {
@@ -209,8 +243,8 @@ body{
 @media (min-width: 1100px){
     .pizzaCard{
         scale: 150%;
-        margin-top: 70px;
-        margin-bottom: 70px;
+        margin-top: 80px;
+        margin-bottom: 80px;
         margin-left: 50px;
         margin-right: 50px;
     }
