@@ -185,6 +185,21 @@ body{
     height: 200px;
 }
 
+.pizzaViewImage{
+    width: 100%;
+}
+.cartItems{
+    position: absolute;
+    top: 35px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    background-color: #E88D38;
+    text-align: center;
+    border-radius: 50%;
+    align-content: center;
+}
+
 /* Animations */
 @keyframes rotate {
     0% { transform: rotateZ(0deg); }

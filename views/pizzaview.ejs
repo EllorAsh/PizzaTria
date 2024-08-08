@@ -26,11 +26,44 @@
                 <h2 >Menu</h2>            
             </a>    
             <a href="./checkout" class="navOption">
-                <h2 >Checkout</h2>            
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                </svg>  
+                <%if(cartItems>0){%>
+                    <div class="cartItems"><span><%=cartItems%></span></div>
+                <%}%>         
             </a>    
         </div>
     </div>
     <h1><%=pizza.name%></h1>
+    <img class="pizzaViewImage" src="./Assets/<%=pizza.name%>.jpeg"/>
+    <form action="/order" method="POST">
+        <input required="true" type="radio" id="basetype" name="BaseType" value="Thick">
+        <label for="basetype">Thick</label><br>
+        <input required="true" type="radio" id="basetype" name="BaseType" value="Thin">
+        <label for="basetype">Thin</label><br>
+
+        <input name="PizzaId" hidden="true" value="<%=pizza.id%>"/>
+        <input type="checkbox" id="extraCheese" name="ExtraCheese" value="7">
+        <label for="extraCheese">Extra Cheese</label><br>
+        <input type="checkbox" id="jalapeno" name="Jalapeno" value="5">
+        <label for="jalapeno">Jalapeno</label><br>
+        <input type="checkbox" id="mushrooms" name="Mushrooms" value="5">
+        <label for="mushrooms">Mushrooms</label><br>
+        <input type="checkbox" id="olives" name="Olives" value="5">
+        <label for="olives">Olives</label><br>
+        <input type="checkbox" id="bacon" name="Bacon" value="10">
+        <label for="bacon">Bacon</label><br>
+        <input type="checkbox" id="chicken" name="Chicken" value="10">
+        <label for="chicken">Chicken</label><br>
+        <input type="checkbox" id="fetaCheese" name="FetaCheese" value="7">
+        <label for="fetaCheese">Feta Cheese</label><br>
+        <input type="checkbox" id="peperoni" name="Peperoni" value="10">
+        <label for="peperoni">Peperoni</label><br>
+        <input type="checkbox" id="avocado" name="Avocado" value="8">
+        <label for="avocado">Avocado</label><br>
+        <input type="submit" value="Order Now"/> 
+    </form>
 
 
     <script src="index.js" charset="UTF-8"></script>
