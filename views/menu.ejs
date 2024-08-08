@@ -32,35 +32,29 @@
     </div>
     <h>This is the menu</h>
     <div class="Specials">
-        <div class="SpecialsText">
-            <p class="SpecialsTop">
-                boe
 
-                hhhah
-                hshsh<br/>
-                hhgdhhdhh
-            </p>
-            <div class="PizzaList">
-                <h1>Try our Specials</h1>
+        <div class="SpecialsText">
+            <div class="pizzaList">
                 <div class="pizzasContainer">
-                    <%if(pizzas){%>
-                        <%pizzas.forEach(pizza => {%>
+                    <%pizzas.forEach(pizza => {%>
+                        <form action="/pizzaview" method="POST">
                             <div class="pizzaCard">
-                                <a href="...">
-                                    <img class="cardImage" src="./Assets/<%=pizza.name%>_nbg.png">
-                                    <p class="pizzaDescription"><%=pizza.name%></p>
-                                </a>                     
+                                <img class="cardImage" src="./Assets/<%=pizza.name%>_nbg.png">
+                                <p class="pizzaDescription"><%=pizza.name%></p>                    
                                 <p class="pizzaName"><%=pizza.name%></p>
                                 <div class="cardPrice">
                                     <p class="pizzaPrice">R<%=pizza.price%></p>
-                                    <a href="..." class="orderNowButton">Order now</a>
-                                </div>   
-                            </div>                            
-                        <%})%>
-                    <%}%>
+                                </div> 
+                            <input name="PizzaId" hidden="true" value="<%=pizza.id%>"/>
+                            <input class="orderNowButton" type="submit" value="Order Now"/> 
+                            </div>                                              
+                        </form>                        
+                    <%})%>
+                    
 
                 </div>
             </div>
+            <h1>hello</h1>
         </div>
         <script src="index.js" charset="UTF-8"></script>
 </body>

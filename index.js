@@ -34,6 +34,16 @@ app.get("/menu", async (req, res)=>{
     })
 });
 
+app.post("/pizzaview", async (req, res)=>{
+    const pizzaId = req.body["PizzaId"];
+    const pizza=await returnPizzaInfo(pizzaId)
+    console.log(req.body);
+    console.log(pizza)
+     res.render("pizzaview.ejs",{
+        pizza:pizza
+     });
+})
+
 
 app.listen(port, ()=>{
   console.log("Server running on port "+ port);
@@ -47,4 +57,9 @@ async function getPizzas(){
         allPizzas.push(pizza);
     });
     return allPizzas;
+}
+
+async function returnPizzaInfo(id){
+    const result = await db.query("SELECT * FROM pizzas WHERE id=($1)",[id]);
+    return(result.rows[0])
 }

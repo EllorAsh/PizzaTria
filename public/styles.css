@@ -1,7 +1,7 @@
 body{
-    background: image-set("./Assets/HomePagePizza_img3.png");
+    background: image-set("./Assets/HomePagePizza_img5.png");
     background-attachment: fixed;
-    margin: 0;
+    margin: 0px;
 }
 .arapey-regular{
     font-family: "Arapey", serif;
@@ -34,7 +34,7 @@ body{
     padding-left: 15px;
     padding-right: 15px;
     text-decoration: none;
-    color: black;
+    color:black;
 
 }
 .active{
@@ -44,7 +44,7 @@ body{
     padding-right: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
-    color: white;
+    color: black;
 }
 .PizzaDisplay{
     display: flex;
@@ -53,24 +53,32 @@ body{
     width: 100vw;
     height: 30vw;
 }
+.PizzaDisplayText{
+    align-self: self-start;
+    width: 25%;
+    margin-left: 10px;
+}
+.PizzaDisplayH{
+    font-size: 4vw;
+}
+.PizzaDisplayB{
+    font-size: 1.5vw;
+    width: 60%;
+}
 .pizza{
     position: absolute;
     z-index: -1;
     width: 80%;
     transform-origin: center;
-    animation:rotate 20s linear infinite;
+    animation:rotate 50s linear infinite;
 }
-
-
-  
-
 .Specials{
-    
     width: 100vw;
 }
 .SpecialsTop{
-    background-color: #B45318; 
+    background-color:#B45318;
     height: 50px; 
+    padding: 20px;
 }
 .SpecialsText{
     height: fit-content;
@@ -79,11 +87,19 @@ body{
     text-align: center;
 }
 
-.currentSpecialsContainer, .pizzasContainer{
+.currentSpecialsContainer{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     padding-bottom: 20px;
+}
+.pizzaList{
+    display: flex;
+    justify-content: center;
+}
+.pizzasContainer{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 }
 .currentSpecialCard, .pizzaCard{
     display: flex;
@@ -150,15 +166,37 @@ body{
     color: white;
     text-decoration: none;
 }
-.new{
-    background: image-set("./Assets/HomePagePizza_img4.png");
+.homePageImg1{
+    width: 100vw;
+}
+.visitMenuH{
+    text-align: center;
+    height: 100px;
+    font-size: 20pt;
+    margin: 0px;
+    background-color: #2f3335;
+    padding-top: 10px;
+    position: relative;
+    top: -5px;
+}
+.menuView{
+    background: image-set("./Assets/HomePagePizza_img5.png");
     background-size: cover;
     height: 200px;
-    width: 100vw;
 }
 
 /* Animations */
 @keyframes rotate {
     0% { transform: rotateZ(0deg); }
     100% { transform: rotateZ(360deg); }
+}
+
+@media (min-width: 1100px){
+    .pizzaCard{
+        scale: 150%;
+        margin-top: 70px;
+        margin-bottom: 70px;
+        margin-left: 50px;
+        margin-right: 50px;
+    }
 }
