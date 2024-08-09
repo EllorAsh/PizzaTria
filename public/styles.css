@@ -41,7 +41,9 @@ body{
     padding-right: 15px;
     text-decoration: none;
     color:black;
-
+}
+.navH:hover{
+    color: #E88D38;
 }
 .active{
     background-color: #B45318;
@@ -52,6 +54,12 @@ body{
     padding-bottom: 5px;
     color: black;
 }
+.active:hover{
+    color: whitesmoke;
+}
+.checkoutMenuNav{
+    color: #843e13;
+}
 .PizzaDisplay{
     display: flex;
     align-items: center;
@@ -61,15 +69,16 @@ body{
 }
 .PizzaDisplayText{
     align-self: self-start;
-    width: 25%;
+    width: 30%;
     margin-left: 10px;
 }
 .PizzaDisplayH{
-    font-size: 4vw;
+    font-size: 5vw;
+    margin: 0px;
 }
 .PizzaDisplayB{
-    font-size: 1.5vw;
-    width: 60%;
+    font-size: 3vw;
+    width: 30vw;
 }
 .pizza{
     position: absolute;
@@ -147,9 +156,11 @@ body{
     color: white;
     padding: 0px;
     padding-left: 10px;
+    padding-right: 10px;
     padding-top: 15px;
     margin: 0;
-    font-size: 14pt;
+    font-size: 12pt;
+    height: 25px;
     text-align: left;
 }
 .cardPrice{
@@ -194,8 +205,37 @@ body{
     height: 200px;
 }
 
-.pizzaViewContainer{
-    background-size: cover;
+.pizzaViewInfo{
+    background-color: rgba(47,51,53, 0.7);
+    color: whitesmoke;
+    margin-left: 25%;
+    padding-left: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.PizzaNameAndPrice{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.pizzaViewDescription{
+    width: 80%;
+    font-size: 16pt;
+}
+.orderButton{
+    background-color: #B45318;
+    border: 0px;
+    padding: 8px;
+    border-radius: 25px;
+    margin-top: 10px;
+}
+.orderButton:hover{
+    background-color: #E88D38;
+}
+.backToMenu{
+    position: absolute;
+    color: whitesmoke;
 }
 
 /* Customize the label (the container) */
@@ -225,16 +265,20 @@ body{
     height: 25px;
     width: 25px;
     background-color: #eee;
+    border-radius: 25%;
+    border: #2f3335;
+    opacity: 40%;
   }
   
   /* On mouse-over, add a grey background color */
   .container:hover input ~ .checkmark {
-    background-color: #ccc;
+    background-color:#E88D38;
   }
   
   /* When the checkbox is checked, add a blue background */
   .container input:checked ~ .checkmark {
-    background-color: #2196F3;
+    background-color:#E88D38;
+    opacity: 100%;
   }
   
   /* Create the checkmark/indicator (hidden when not checked) */
@@ -261,15 +305,16 @@ body{
   }
 
 .cartItems{
-    position: absolute;
-    top: 35px;
-    right: 10px;
+    position: relative;
+    top: -45px;
+    right: -20px;
     width: 20px;
     height: 20px;
-    background-color: #E88D38;
+    background-color:#B45318;
     text-align: center;
     border-radius: 50%;
     align-content: center;
+    color: whitesmoke;
 }
 .aboutUsContainer{
     background-color: #2f3335;
@@ -306,6 +351,51 @@ body{
 .typeIcon{
     padding: 3px;
 }
+.menuHeaderImgBG{
+    height: 200px;
+}
+.menuHeader{
+    background-color: #2f3335;
+    height: 70px;
+}
+.menuH1{
+    font-size: 60pt;
+    text-align: center;
+    color: whitesmoke;
+    position: relative;
+    top: -30px;
+}
+.pizzasInOrderContainer{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.pizzaInOrder{
+    background-color: #2f3335;
+    display: flex;
+    width: 80%;
+    align-items: center;
+    margin: 0.5%;
+}
+.pizzaInOrderImg{
+    width: 30%;
+}
+.pizzaInOrderInfo{
+    display: flex;
+    width: 50%;
+}
+.pizzaOrderName{
+    font-size: 16pt;
+    margin: 0px;
+}
+.pizzaOrderAddTop{
+    font-size: 12pt;
+    margin: 0px;
+}
+.pizzaOrderPrice{
+    font-size: 16pt;
+    width: 20%;
+}
 
 /* Animations */
 @keyframes rotate {
@@ -313,12 +403,49 @@ body{
     100% { transform: rotateZ(360deg); }
 }
 
-@media (min-width: 1100px){
+@media (min-width: 1400px){
     .pizzaCard{
         scale: 150%;
-        margin-top: 80px;
-        margin-bottom: 80px;
-        margin-left: 50px;
-        margin-right: 50px;
+        margin-top: 75px;
+        margin-bottom: 75px;
+        margin-left: 45px;
+        margin-right: 45px;
+    }
+    .pizzasContainer{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+}
+@media (min-width : 800px)and (max-width:1400px){
+    .pizzaCard{
+        scale: 120%;
+        margin-top: 35px;
+        margin-bottom: 35px;
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+    .pizzasContainer{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (min-width : 600px)and (max-width:800px){
+    .pizzasContainer{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (min-width : 450px)and (max-width:600px){
+    .pizzasContainer{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width:450px){
+    
+    .pizzasContainer{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
     }
 }

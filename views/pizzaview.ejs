@@ -20,13 +20,13 @@
         </div>
         <div class="navLinks">
             <a href="./home" class="navOption">
-                <h2>Home</h2>            
+                <h2 class="navH">Home</h2>            
             </a>       
             <a href="./menu" class="navOption">
-                <h2 >Menu</h2>            
+                <h2 class="navH">Menu</h2>            
             </a>    
             <a href="./checkout" class="navOption">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+                <svg class="navH" xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
                     <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
                 </svg>  
                 <%if(cartItems>0){%>
@@ -35,28 +35,47 @@
             </a>    
         </div>
     </div>
-    <h1><%=pizza.name%></h1>
 
-    <div class="pizzaViewContainer" style="background: image-set('./Assets/<%=pizza.name%>.jpeg'); background-size: cover;">
-        <form action="/order" method="POST">
-            <input required="true" type="radio" id="basetype" name="BaseType" value="Thick">
-            <label for="basetype">Thick</label><br>
-            <input required="true" type="radio" id="basetype" name="BaseType" value="Thin">
-            <label for="basetype">Thin</label><br>
+    <div style="background: image-set('./Assets/<%=pizza.name%>.jpeg'); background-size: cover;">
+        <a class="backToMenu" href="./menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5"/>
+            </svg>            
+        </a>
+        <div class="pizzaViewInfo">
+            <div class="PizzaNameAndPrice">
+                <h1 style="padding-right: 20px; margin: 0%;"><%=pizza.name%></h1>
+                <h2 style="padding-right: 20px; margin: 0%; color: #E88D38;;">R<%=pizza.price%></h2>                
+            </div>
+            <p class="pizzaViewDescription">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+            <form action="/order" method="POST">
 
-            <input name="PizzaId" hidden="true" value="<%=pizza.id%>"/>
+                <h2>Please select a base</h2>
+                <label class="container">Thick
+                    <input required="true" type="radio" id="basetype" name="BaseType" value="Thick">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Thin
+                    <input required="true" type="radio" id="basetype" name="BaseType" value="Thin">
+                    <span class="checkmark"></span>
+                </label>
 
-            <%if(toppings){%>
-                <%toppings.forEach(topping => {%>
-                    <label class="additionalTopping container"><%=topping.topping_name%>
-                        <input type="checkbox" id="<%=topping.id%>" name="<%=topping.id_name%>" value="<%=topping.topping_price%>">
-                        <span class="checkmark"></span>
-                    </label>
-                <%})%>    
-            <%}%>
-        
-            <input type="submit" value="Order Now"/> 
-        </form>
+                <input name="PizzaId" hidden="true" value="<%=pizza.id%>"/>
+                <h2>Additional Toppings</h2>
+                <%if(toppings){%>
+                    <%toppings.forEach(topping => {%>
+                        <label class="additionalTopping container"><%=topping.topping_name%>
+                            <input type="checkbox" id="<%=topping.id%>" name="<%=topping.id_name%>" value="<%=topping.topping_price%>">
+                            <span class="checkmark"></span>
+                        </label>
+                    <%})%>    
+                <%}%>
+            
+                <input class="orderButton" type="submit" value="Order Now"/> 
+            </form>
+        </div>
     </div>
 
 
