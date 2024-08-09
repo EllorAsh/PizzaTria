@@ -43,12 +43,14 @@ app.get("/menu", async (req, res)=>{
 
 app.post("/pizzaview", async (req, res)=>{
     const pizzaId = req.body["PizzaId"];
-    const pizza=await returnPizzaInfo(pizzaId)
+    const pizza=await returnPizzaInfo(pizzaId);
+    const toppings = await getAdditionalToppings();
     console.log(req.body);
     console.log(pizza)
      res.render("pizzaview.ejs",{
         pizza:pizza,
-        cartItems:inCart
+        cartItems:inCart,
+        toppings:toppings
      });
 })
 app.post("/order", async(req, res)=>{
@@ -81,6 +83,15 @@ async function getPizzas(){
 async function returnPizzaInfo(id){
     const result = await db.query("SELECT * FROM pizzas WHERE id=($1)",[id]);
     return(result.rows[0])
+}
+
+async function getAdditionalToppings() {
+    const result = await db.query("SELECT * FROM additionaltoppings");
+    let toppings =[]
+    result.rows.forEach((topping)=>{
+        toppings.push(topping)
+    });
+    return toppings;
 }
 
 async function placePizzaToOrder(pizza) {

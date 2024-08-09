@@ -36,34 +36,30 @@
         </div>
     </div>
     <h1><%=pizza.name%></h1>
-    <img class="pizzaViewImage" src="./Assets/<%=pizza.name%>.jpeg"/>
-    <form action="/order" method="POST">
-        <input required="true" type="radio" id="basetype" name="BaseType" value="Thick">
-        <label for="basetype">Thick</label><br>
-        <input required="true" type="radio" id="basetype" name="BaseType" value="Thin">
-        <label for="basetype">Thin</label><br>
 
-        <input name="PizzaId" hidden="true" value="<%=pizza.id%>"/>
-        <input type="checkbox" id="extraCheese" name="ExtraCheese" value="7">
-        <label for="extraCheese">Extra Cheese</label><br>
-        <input type="checkbox" id="jalapeno" name="Jalapeno" value="5">
-        <label for="jalapeno">Jalapeno</label><br>
-        <input type="checkbox" id="mushrooms" name="Mushrooms" value="5">
-        <label for="mushrooms">Mushrooms</label><br>
-        <input type="checkbox" id="olives" name="Olives" value="5">
-        <label for="olives">Olives</label><br>
-        <input type="checkbox" id="bacon" name="Bacon" value="10">
-        <label for="bacon">Bacon</label><br>
-        <input type="checkbox" id="chicken" name="Chicken" value="10">
-        <label for="chicken">Chicken</label><br>
-        <input type="checkbox" id="fetaCheese" name="FetaCheese" value="7">
-        <label for="fetaCheese">Feta Cheese</label><br>
-        <input type="checkbox" id="peperoni" name="Peperoni" value="10">
-        <label for="peperoni">Peperoni</label><br>
-        <input type="checkbox" id="avocado" name="Avocado" value="8">
-        <label for="avocado">Avocado</label><br>
-        <input type="submit" value="Order Now"/> 
-    </form>
+    <div class="pizzaViewContainer" style="background: image-set('./Assets/<%=pizza.name%>.jpeg'); background-size: cover;">
+        <form action="/order" method="POST">
+            <input required="true" type="radio" id="basetype" name="BaseType" value="Thick">
+            <label for="basetype">Thick</label><br>
+            <input required="true" type="radio" id="basetype" name="BaseType" value="Thin">
+            <label for="basetype">Thin</label><br>
+
+            <input name="PizzaId" hidden="true" value="<%=pizza.id%>"/>
+
+            <%if(toppings){%>
+                <%toppings.forEach(topping => {%>
+                    <label class="additionalTopping container"><%=topping.topping_name%>
+                        <input type="checkbox" id="<%=topping.id%>" name="<%=topping.id_name%>" value="<%=topping.topping_price%>">
+                        <span class="checkmark"></span>
+                    </label>
+                <%})%>    
+            <%}%>
+        
+            <input type="submit" value="Order Now"/> 
+        </form>
+    </div>
+
+
 
 
     <script src="index.js" charset="UTF-8"></script>
