@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="./styles.css"/>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&family=Pinyon+Script&display=swap" rel="stylesheet">
+      
+</head>
+<body>
+    <div class="Navbar arapey-regular">
+        <div class="navTitle">
+            <img src="./Assets/Logo top.png" class="logoNav" alt="PizzaTria Logo"/>
+            <h1 class="PizzaTriaName">PizzaTria</h1>
+        </div>
+        <div class="navLinks">
+            <a href="./home" class="navOption">
+                <h2 class="navH">Home</h2>            
+            </a>       
+            <a href="./menu" class="navOption">
+                <h2 class="navH">Menu</h2>            
+            </a>    
+            <a href="./profile" class="navOption">
+                <h2 class="navH active">Profile</h2>
+            </a>              
+            <a href="./checkout" class="navOption">
+                <svg class="navH" xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                </svg>  
+                <%if(cartItems>0){%>
+                    <div class="cartItems"><span><%=cartItems%></span></div>
+                <%}%>         
+            </a>
+        </div>
+    </div> 
+    
+</body>
+</html>

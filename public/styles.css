@@ -41,6 +41,7 @@ body{
     padding-right: 15px;
     text-decoration: none;
     color:black;
+    margin: 0%;
 }
 .navH:hover{
     color: #E88D38;
@@ -410,6 +411,9 @@ body{
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+}
+.profileIcon{
+    margin-bottom: 5px;
 }
 
 /* Animations */

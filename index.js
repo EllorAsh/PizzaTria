@@ -67,7 +67,9 @@ app.get("/auth/google/secrets", passport.authenticate("google", {
 
 app.get("/home", async(req, res)=>{
     if (req.isAuthenticated()) {
-        const inCart =await getCartItems()
+        const user = req.user.email
+        const inCart =await getCartItems(user)
+        console.log(req.user.email)
         res.render("home.ejs",{
             cartItems:inCart
         })
@@ -78,9 +80,10 @@ app.get("/home", async(req, res)=>{
 });
 
 app.get("/menu", async (req, res)=>{
-    const Pizzas= await getPizzas();
-    const inCart =await getCartItems()
     if (req.isAuthenticated()) {
+        const user = req.user.email
+        const Pizzas= await getPizzas();
+        const inCart =await getCartItems(user)
         res.render("menu.ejs",{
             pizzas:Pizzas,
             cartItems:inCart
@@ -91,13 +94,14 @@ app.get("/menu", async (req, res)=>{
 });
 
 app.post("/pizzaview", async (req, res)=>{
-    const pizzaId = req.body["PizzaId"];
-    const pizza=await returnPizzaInfo(pizzaId);
-    const toppings = await getAdditionalToppings();
-    console.log(req.body);
-    console.log(pizza)
-    const inCart =await getCartItems()
     if (req.isAuthenticated()) {
+        const user = req.user.email
+        const pizzaId = req.body["PizzaId"];
+        const pizza=await returnPizzaInfo(pizzaId);
+        const toppings = await getAdditionalToppings();
+        console.log(req.body);
+        console.log(pizza)
+        const inCart =await getCartItems(user)
         res.render("pizzaview.ejs",{
             pizza:pizza,
             cartItems:inCart,
@@ -108,14 +112,16 @@ app.post("/pizzaview", async (req, res)=>{
     }
 })
 app.post("/order", async(req, res)=>{
-    const pizzaId = req.body["PizzaId"];
-    const pizza=await returnPizzaInfo(pizzaId)
-    const toppings = await getAdditionalToppings();
-    const pizzafororder=req.body
-    placePizzaToOrder(pizzafororder)
-    let inCart =await getCartItems()
-    inCart=inCart+1
     if (req.isAuthenticated()) {
+        const pizzaId = req.body["PizzaId"];
+        const pizza=await returnPizzaInfo(pizzaId)
+        const toppings = await getAdditionalToppings();
+        const pizzafororder=req.body
+        const user = req.user.email
+        console.log(user)
+        placePizzaToOrder(pizzafororder, user)
+        let inCart =await getCartItems(user)
+        inCart=inCart+1
         res.render("pizzaview.ejs",{
             pizza:pizza,
             cartItems:inCart,
@@ -127,14 +133,27 @@ app.post("/order", async(req, res)=>{
 })
 
 app.get("/checkout", async(req, res)=>{
-    const order = await getOrder()
-    const inCart =await getCartItems()
-    const total = await getOrderTotal()
     if (req.isAuthenticated()) {
+        const user = req.user.email
+        const order = await getOrder(user)
+        const inCart =await getCartItems(user)
+        const total = await getOrderTotal(user)
         res.render("checkout.ejs",{
             cartItems:inCart,
             orderPizzas:order,
             orderTotal:total
+        })
+    }else{
+        res.redirect("/login")
+    }
+})
+
+app.get("/profile", async(req, res)=>{
+    if (req.isAuthenticated()) {
+        const user = req.user.email
+        const inCart =await getCartItems(user)
+        res.render("profile.ejs",{
+            cartItems:inCart,
         })
     }else{
         res.redirect("/login")
@@ -244,13 +263,13 @@ app.listen(port, ()=>{
 })
 
 // Functions
-async function getCartItems(){
-    const result = await db.query("SELECT * FROM currentorderinfo");
+async function getCartItems(user){
+    const result = await db.query("SELECT * FROM currentorderinfo WHERE useremail = ($1)",[user]);
     return(result.rows.length);
 }
-async function getOrder() {
+async function getOrder(user) {
     let orders=[]
-    const result = await db.query("SELECT * FROM currentorderinfo");
+    const result = await db.query("SELECT * FROM currentorderinfo WHERE useremail = ($1)",[user]);
     if(result.rows.length > 0){
         result.rows.forEach(order=>{
             orders.push(order);
@@ -282,7 +301,7 @@ async function getAdditionalToppings() {
     return toppings;
 }
 
-async function placePizzaToOrder(pizza) {
+async function placePizzaToOrder(pizza, user) {
     let additionalToppings= ""
     let additionalToppingsPrice=0
     if(pizza.ExtraCheese){
@@ -328,13 +347,13 @@ async function placePizzaToOrder(pizza) {
     const totalPriceForPizza=orderedPizzaPrice+additionalToppingsPrice
 
     console.log(additionalToppings,additionalToppingsPrice , orderedPizzaName, orderedPizzaPrice, pizza.BaseType, totalPriceForPizza)
-    await db.query("INSERT INTO currentorderinfo (pizza_id, pizza_name, base_type, additional_toppings, additional_toppings_price, pizza_price, total_price_for_pizza) Values ($1, $2, $3, $4, $5, $6, $7)",[pizza.PizzaId, orderedPizzaName, pizza.BaseType, additionalToppings, additionalToppingsPrice, orderedPizzaPrice,totalPriceForPizza]);
+    await db.query("INSERT INTO currentorderinfo (pizza_id, pizza_name, base_type, additional_toppings, additional_toppings_price, pizza_price, total_price_for_pizza, useremail) Values ($1, $2, $3, $4, $5, $6, $7, $8)",[pizza.PizzaId, orderedPizzaName, pizza.BaseType, additionalToppings, additionalToppingsPrice, orderedPizzaPrice,totalPriceForPizza, user]);
     console.log("Pizza added to order.")
 }
 
-async function getOrderTotal() {
+async function getOrderTotal(user) {
     let OrderTotal=0;
-    const result = await db.query("SELECT * FROM currentorderinfo");
+    const result = await db.query("SELECT * FROM currentorderinfo WHERE useremail = ($1)",[user]);
     if(result.rows.length > 0){
         result.rows.forEach(order=>{
             OrderTotal = OrderTotal+order.total_price_for_pizza
