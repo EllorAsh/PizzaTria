@@ -40,16 +40,22 @@
     <div class="pizzasInOrderContainer">
         <%if(orderPizzas.length > 0){%>
             <%orderPizzas.forEach(pizza =>{%>
-                <div class="pizzaInOrder">
-                    <img class="pizzaInOrderImg" src="./Assets/<%=pizza.pizza_name%>_nbg.png"/>
-                    <div class="pizzaInOrderInfo">
-                        <div>
-                            <p class="pizzaOrderName"><%=pizza.pizza_name%></p>
-                            <p class="pizzaOrderAddTop"><%=pizza.additional_toppings%></p>
+                <div class="pizzaInOrder" style="background: image-set('./Assets/<%=pizza.pizza_name%>.jpeg'); background-size: cover;">
+                    <div class="checkoutPizzaImg" style="background: image-set('./Assets/<%=pizza.pizza_name%>_nbg.png'); background-size: cover;"></div>
+                        <div class="pizzaInOrderInfo">
+                            <div>
+                                <div class="pizzaInOrderName">
+                                    <span class="pizzaOrderName"><%=pizza.pizza_name%></span>
+                                    <span class="pizzaOrderPrice">R<%=pizza.total_price_for_pizza%></span>                                
+                                </div>
+                                <div class="pizzaOrderAddTop">
+                                    <%if(pizza.additional_toppings){%><p>Additional toppings</p><%}%>
+                                    <p ><%=pizza.additional_toppings%></p>
+                                </div>   
+                            </div>
                         </div>
                     </div>
-                    <p class="pizzaOrderPrice">R<%=pizza.total_price_for_pizza%></p>
-                </div>
+                
             <%});%>
         <%}else{%>
             <div>
@@ -57,6 +63,12 @@
 
             </div>
         <%};%>
+    </div>
+    <div>
+        <h1>Order total</h1>
+        <p>Order total before tax: <%=orderTotal%></p>
+        <P>Total tax: <%=orderTotal*0.15%></P>
+        <p>Order total: <%=orderTotal + (orderTotal*0.15)%></p>
     </div>
 
     

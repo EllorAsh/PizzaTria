@@ -73,9 +73,11 @@ app.post("/order", async(req, res)=>{
 app.get("/checkout", async(req, res)=>{
     const order = await getOrder()
     const inCart =await getCartItems()
+    const total = await getOrderTotal()
     res.render("checkout.ejs",{
         cartItems:inCart,
-        orderPizzas:order
+        orderPizzas:order,
+        orderTotal:total
     })
 })
 
@@ -171,4 +173,15 @@ async function placePizzaToOrder(pizza) {
     console.log(additionalToppings,additionalToppingsPrice , orderedPizzaName, orderedPizzaPrice, pizza.BaseType, totalPriceForPizza)
     await db.query("INSERT INTO currentorderinfo (pizza_id, pizza_name, base_type, additional_toppings, additional_toppings_price, pizza_price, total_price_for_pizza) Values ($1, $2, $3, $4, $5, $6, $7)",[pizza.PizzaId, orderedPizzaName, pizza.BaseType, additionalToppings, additionalToppingsPrice, orderedPizzaPrice,totalPriceForPizza]);
     console.log("Pizza added to order.")
+}
+
+async function getOrderTotal() {
+    let OrderTotal=0;
+    const result = await db.query("SELECT * FROM currentorderinfo");
+    if(result.rows.length > 0){
+        result.rows.forEach(order=>{
+            OrderTotal = OrderTotal+order.total_price_for_pizza
+        });        
+    }
+    return OrderTotal
 }
