@@ -2,7 +2,13 @@
 import express from "express";
 import pg from "pg";
 import bodyParser from "body-parser";
+
+import bcrypt from "bcrypt";
+import passport from "passport";
+import { Strategy } from "passport-local";
+import session from "express-session";
 import env from "dotenv";
+import GoogleStrategy from "passport-google-oauth2";
 
 env.config();
 const db = new pg.Client({
@@ -16,30 +22,72 @@ const db = new pg.Client({
 db.connect();
 const app = express();
 const port = 3000;
+const saltRounds = 10;
+
+app.use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: true,
+    })
+);
+
 app.use(express.static("./public"));
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get("/auth/google", passport.authenticate("google",{
+    scope:["profile","email"],
+}))
 
 app.get("/", async(req, res)=>{
-    const inCart =await getCartItems()
-    res.render("home.ejs",{
-    cartItems:inCart
-  })
+    res.render("login.ejs")
 });
 
+app.get("/login", async(req, res)=>{
+    res.render("login.ejs")
+});
+
+app.get("/register", (req, res) => {
+    res.render("register.ejs");
+});
+
+app.post(
+    "/login",
+    passport.authenticate("local", {
+      successRedirect: "/home",
+      failureRedirect: "/login",
+    })
+);
+app.get("/auth/google/secrets", passport.authenticate("google", {
+    successRedirect: "/home",
+    failureRedirect: "/login",
+}));
+
 app.get("/home", async(req, res)=>{
-    const inCart =await getCartItems()
-    res.render("home.ejs",{
-        cartItems:inCart
-      })
+    if (req.isAuthenticated()) {
+        const inCart =await getCartItems()
+        res.render("home.ejs",{
+            cartItems:inCart
+        })
+    } else {
+        res.redirect("/login");
+    }
+
 });
 
 app.get("/menu", async (req, res)=>{
     const Pizzas= await getPizzas();
     const inCart =await getCartItems()
-    res.render("menu.ejs",{
-        pizzas:Pizzas,
-        cartItems:inCart
-    })
+    if (req.isAuthenticated()) {
+        res.render("menu.ejs",{
+            pizzas:Pizzas,
+            cartItems:inCart
+        })
+    }else{
+        res.redirect("/login")
+    }
 });
 
 app.post("/pizzaview", async (req, res)=>{
@@ -49,11 +97,15 @@ app.post("/pizzaview", async (req, res)=>{
     console.log(req.body);
     console.log(pizza)
     const inCart =await getCartItems()
-     res.render("pizzaview.ejs",{
-        pizza:pizza,
-        cartItems:inCart,
-        toppings:toppings
-     });
+    if (req.isAuthenticated()) {
+        res.render("pizzaview.ejs",{
+            pizza:pizza,
+            cartItems:inCart,
+            toppings:toppings
+        });
+    }else{
+        res.redirect("login")
+    }
 })
 app.post("/order", async(req, res)=>{
     const pizzaId = req.body["PizzaId"];
@@ -63,24 +115,129 @@ app.post("/order", async(req, res)=>{
     placePizzaToOrder(pizzafororder)
     let inCart =await getCartItems()
     inCart=inCart+1
-    res.render("pizzaview.ejs",{
-        pizza:pizza,
-        cartItems:inCart,
-        toppings:toppings
-    });
+    if (req.isAuthenticated()) {
+        res.render("pizzaview.ejs",{
+            pizza:pizza,
+            cartItems:inCart,
+            toppings:toppings
+        });
+    }else{
+        res.redirect("/login")
+    }
 })
 
 app.get("/checkout", async(req, res)=>{
     const order = await getOrder()
     const inCart =await getCartItems()
     const total = await getOrderTotal()
-    res.render("checkout.ejs",{
-        cartItems:inCart,
-        orderPizzas:order,
-        orderTotal:total
-    })
+    if (req.isAuthenticated()) {
+        res.render("checkout.ejs",{
+            cartItems:inCart,
+            orderPizzas:order,
+            orderTotal:total
+        })
+    }else{
+        res.redirect("/login")
+    }
 })
-
+  
+  app.post("/register", async (req, res) => {
+    const email = req.body.username;
+    const password = req.body.password;
+  
+    try {
+      const checkResult = await db.query("SELECT * FROM users WHERE email = $1", [
+        email,
+      ]);
+  
+      if (checkResult.rows.length > 0) {
+        req.redirect("/login");
+      } else {
+        bcrypt.hash(password, saltRounds, async (err, hash) => {
+          if (err) {
+            console.error("Error hashing password:", err);
+          } else {
+            const result = await db.query(
+              "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
+              [email, hash]
+            );
+            const user = result.rows[0];
+            req.login(user, (err) => {
+              console.log("success");
+              res.redirect("/secrets");
+            });
+          }
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
+  
+  passport.use("local",
+    new Strategy(async function verify(username, password, cb) {
+      try {
+        const result = await db.query("SELECT * FROM users WHERE email = $1 ", [
+          username,
+        ]);
+        if (result.rows.length > 0) {
+          const user = result.rows[0];
+          const storedHashedPassword = user.password;
+          bcrypt.compare(password, storedHashedPassword, (err, valid) => {
+            if (err) {
+              //Error with password check
+              console.error("Error comparing passwords:", err);
+              return cb(err);
+            } else {
+              if (valid) {
+                //Passed password check
+                return cb(null, user);
+              } else {
+                //Did not pass password check
+                return cb(null, false);
+              }
+            }
+          });
+        } else {
+          return cb("User not found");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    })
+  );
+  
+  passport.use("google", new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL:"http://localhost:3000/auth/google/secrets",
+    userProfileURL:"http://www.googleapis.com/oauth2/v3/userinfo"
+  }, async (accessToken, refreshToken, profile, cb)=>{
+    console.log(profile);
+    try{
+      const result =await db.query("SELECT * FROM users WHERE email = $1", [profile.email])
+      if(result.rows.length === 0){
+        //set password as google in database to show that this is a user logged in with google.
+        //do not get password from google.
+        const newUser = await db.query("INSERT INTO users (email, password) VALUES ($1, $2)", [profile.email, "google"])
+        cb(null, newUser.rows[0]);
+      }else{
+        //Already existing user
+        cb(null, result.rows[0]);
+      }
+    }catch(err){
+      cb(err);
+    }
+  })
+  );
+  
+  passport.serializeUser((user, cb) => {
+    cb(null, user);
+  });
+  passport.deserializeUser((user, cb) => {
+    cb(null, user);
+  });
+  
 
 app.listen(port, ()=>{
   console.log("Server running on port "+ port);
@@ -184,4 +341,8 @@ async function getOrderTotal() {
         });        
     }
     return OrderTotal
+}
+
+async function login(userEmail, userPassword) {
+    const result = await db.query("SELECT * FROM users WHERE userEmail = ($1)",[userEmail]);
 }
