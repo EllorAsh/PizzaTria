@@ -1,7 +1,10 @@
 body{
-    background: image-set("./Assets/HomePagePizza_img5.png");
+    background: image-set("./Assets/wood-bg.jpg");
     background-attachment: fixed;
     margin: 0px;
+}
+.noMargin{
+    margin: 0%;
 }
 .arapey-regular{
     font-family: "Arapey", serif;
@@ -77,9 +80,13 @@ body{
     font-size: 5vw;
     margin: 0px;
 }
+.standout{
+    color:#E88D38;
+}
 .PizzaDisplayB{
     font-size: 3vw;
     width: 20vw;
+    text-align: left;
 }
 .pizza{
     position: absolute;
@@ -93,7 +100,7 @@ body{
 }
 .SpecialsTop{
     background-color:#B45318;
-    height: 30px; 
+    height: fit-content; 
     padding: 20px;
     margin: 0px;
 }
@@ -136,7 +143,6 @@ body{
     background-color:#E88D38;
     .pizzaDescription{
         opacity: 100%;
-        
     }
     .orderNowButton{
         background-color: #B45318;
@@ -415,6 +421,10 @@ body{
 .profileIcon{
     margin-bottom: 5px;
 }
+.removeFromOrder{
+    background-color: rgba(100,99,99, 0);
+    border-color: rgba(100,99,99, 0);
+}
 
 /* Animations */
 @keyframes rotate {
@@ -465,6 +475,6 @@ body{
     
     .pizzasContainer{
         display: grid;
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 }

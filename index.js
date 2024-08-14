@@ -23,6 +23,7 @@ db.connect();
 const app = express();
 const port = 3000;
 const saltRounds = 10;
+let orderPlaced = 0
 
 app.use(
     session({
@@ -135,13 +136,16 @@ app.post("/order", async(req, res)=>{
 app.get("/checkout", async(req, res)=>{
     if (req.isAuthenticated()) {
         const user = req.user.email
+        const orderP = orderPlaced
+        orderPlaced =0;
         const order = await getOrder(user)
         const inCart =await getCartItems(user)
         const total = await getOrderTotal(user)
         res.render("checkout.ejs",{
             cartItems:inCart,
             orderPizzas:order,
-            orderTotal:total
+            orderTotal:total,
+            orderPlaced:orderP,
         })
     }else{
         res.redirect("/login")
@@ -158,6 +162,30 @@ app.get("/profile", async(req, res)=>{
     }else{
         res.redirect("/login")
     }
+})
+
+app.post("/placeOrder", async(req, res)=>{
+  if (req.isAuthenticated()) {
+    const user = req.user.email
+    let orderInfo = req.body
+    const total = await getOrderTotal(user) 
+    placeOrder(user, total, orderInfo)
+    orderPlaced=1;
+    res.redirect("checkout")
+  }else{
+    res.redirect("/login")
+  }
+
+})
+
+app.post("/deletePizza", async(req, res)=>{
+  if (req.isAuthenticated()) {
+    let orderId = req.body.order_id
+    deletePizza(orderId)
+    res.redirect("checkout")
+  }else{
+    res.redirect("/login")
+  }
 })
   
   app.post("/register", async (req, res) => {
@@ -263,6 +291,35 @@ app.listen(port, ()=>{
 })
 
 // Functions
+
+async function deletePizza(order_id) {
+  await db.query("DELETE FROM currentorderinfo WHERE id = ($1)",[order_id])
+}
+
+async function placeOrder(user, total, order){
+  const result = await db.query("SELECT * FROM currentorderinfo WHERE useremail = ($1)",[user]);
+  const users = await db.query("SELECT * FROM users WHERE email =($1)", [user])
+  let pizzas =[]
+  let userId = 0
+  result.rows.forEach((pizza)=>{
+    pizzas.push(pizza.pizza_name)
+  })
+  if(users.rows.length > 0){
+    users.rows.forEach(u=>{
+        userId = u.id
+    });        
+  } 
+  let deliveryMethod = order.deliveryM;
+  let tax = total * 0.15;
+  let orderTotal = total + tax;
+  let additionalNotes = order.AdditionalNote;
+  console.log("Order Placed with pizzas: "+ pizzas + " order total: " + orderTotal + " the order will be for "+ deliveryMethod + " user: "+ userId+ " left additional notes: "+ additionalNotes )
+  await db.query("INSERT INTO orders (pizzas, delivery_method, cost_before_tax, total_tax, cost_after_tax, order_user_id) Values ($1, $2, $3, $4, $5, $6 )",[pizzas, deliveryMethod, total, tax, orderTotal, userId]);
+  await db.query("DELETE FROM currentorderinfo WHERE useremail = ($1)",[user])
+}
+
+
+
 async function getCartItems(user){
     const result = await db.query("SELECT * FROM currentorderinfo WHERE useremail = ($1)",[user]);
     return(result.rows.length);
@@ -360,8 +417,4 @@ async function getOrderTotal(user) {
         });        
     }
     return OrderTotal
-}
-
-async function login(userEmail, userPassword) {
-    const result = await db.query("SELECT * FROM users WHERE userEmail = ($1)",[userEmail]);
 }

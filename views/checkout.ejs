@@ -39,12 +39,23 @@
             </a>
         </div>
     </div>   
-
+    <%if(orderPlaced ==1){%>
+        <h1>Your Order Has Been Placed</h1>
+    <%}%>
     <div class="pizzasInOrderContainer">
         <%if(orderPizzas.length > 0){%>
             <%orderPizzas.forEach(pizza =>{%>
                 <div class="pizzaInOrder" style="background: image-set('./Assets/<%=pizza.pizza_name%>.jpeg'); background-size: cover;">
-                    <div class="checkoutPizzaImg" style="background: image-set('./Assets/<%=pizza.pizza_name%>_nbg.png'); background-size: cover;"></div>
+                    <div class="checkoutPizzaImg" style="background: image-set('./Assets/<%=pizza.pizza_name%>_nbg.png'); background-size: cover;">
+                        <form action="/deletePizza" method="POST">
+                            <input hidden="true" name="order_id" value="<%=pizza.id%>">
+                            <button class="removeFromOrder" type="submit" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                                </svg>                          
+                            </button>                              
+                        </form>   
+                    </div>
                         <div class="pizzaInOrderInfo">
                             <div>
                                 <div class="pizzaInOrderName">
@@ -58,7 +69,8 @@
                             </div>
                         </div>
                     </div>
-                
+
+                    
             <%});%>
         <%}else{%>
             <div>
@@ -66,12 +78,25 @@
 
             </div>
         <%};%>
-    </div>
-    <div>
-        <h1>Order total</h1>
-        <p>Order total before tax: <%=orderTotal%></p>
-        <P>Total tax: <%=orderTotal*0.15%></P>
-        <p>Order total: <%=orderTotal + (orderTotal*0.15)%></p>
+        <div>
+            <h1>Order total</h1>
+            <p>Order total before tax: <%=orderTotal%></p>
+            <P>Total tax: <%=orderTotal*0.15%></P>
+            <p>Order total: <%=orderTotal + (orderTotal*0.15)%></p>
+            <form action="placeOrder" method="POST">
+                <label class="container">Pick-up
+                    <input required="true" type="radio" id="basetype" name="deliveryM" value="Pick-up">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Delivery
+                    <input required="true" type="radio" id="basetype" name="deliveryM" value="Delivery">
+                    <span class="checkmark"></span>
+                </label>
+                <input type="text" name="AdditionalNote">
+                <input type="submit" value="Place order">
+                
+            </form>
+        </div>
     </div>
 
     

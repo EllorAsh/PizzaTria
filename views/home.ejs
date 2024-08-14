@@ -44,48 +44,33 @@
     <div class="PizzaDisplay">
         <img class="pizza" src="./Assets/Grilled Chicken Pizza_nbg.png" alt="Pizza Image"/> 
         <div class="PizzaDisplayText">
-            <h2 class="PizzaDisplayH">Try the best pizza by far.</h2>
+            <h2 class="PizzaDisplayH">Have a <span class="standout">pizzalicious</span> experience!</h2>
             <p class="PizzaDisplayB">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Try our Grilled Chicken Pizza.
             </p>
         </div> 
     </div>
     <div class="Specials">
         <div class="SpecialsText">
-            <p class="SpecialsTop">
-                Pizza Description
-            </p>
+            <div class="SpecialsTop">
+                <h2 class="noMargin">Grilled Chicken Pizza</h2>
+                <p class="noMargin">Savor the flavors of a mouthwatering grilled chicken pizza topped with vibrant peppers, juicy tomatoes, and a generous amount of gooey cheese.</p>
+            </div>
             <div class="SpecialsList">
                 <h1>Try our Specials</h1>
                 <div class="currentSpecialsContainer">
-
-                    <div class="currentSpecialCard">
-                        <img class="cardImage" src="./Assets/HomePagePizza_img1.png">
-                        <p class="pizzaDescription">Hello</p>
-                        <p class="pizzaName">Pizza Name</p>
-                        <div class="cardPrice">
-                            <p class="pizzaPrice">Pizza Price</p>
-                            <a href="..." class="orderNowButton">Order now</a>
-                        </div>
-                    </div>
-                    <div class="currentSpecialCard">
-                        <img class="cardImage" src="./Assets/HomePagePizza_img1.png">
-                        <p class="pizzaDescription">Hello</p>
-                        <p class="pizzaName">Pizza Name</p>
-                        <div class="cardPrice">
-                            <p class="pizzaPrice">Pizza Price</p>
-                            <a href="..." class="orderNowButton">Order now</a>
-                        </div>
-                    </div>
-                    <div class="currentSpecialCard">
-                        <img class="cardImage" src="./Assets/HomePagePizza_img1.png">
-                        <p class="pizzaDescription">Hello</p>
-                        <p class="pizzaName">Pizza Name</p>
-                        <div class="cardPrice">
-                            <p class="pizzaPrice">Pizza Price</p>
-                            <a href="..." class="orderNowButton">Order now</a>
-                        </div>
-                    </div>
+                    <form action="/pizzaview" method="POST">
+                        <div class="pizzaCard">
+                            <img class="cardImage" src="...">
+                            <p class="pizzaDescription">Description</p>
+                            <p class="pizzaName">Name</p>
+                            <div class="cardPrice">
+                                <p class="pizzaPrice">R</p>
+                            </div> 
+                        <input name="PizzaId" hidden="true" value=""/>
+                        <input class="orderNowButton" type="submit" value="Order Now"/> 
+                        </div>                                              
+                    </form>
                 </div>
             </div>
         </div>
