@@ -78,27 +78,26 @@
 
             </div>
         <%};%>
-        <div>
-            <h1>Order total</h1>
-            <p>Order total before tax: <%=orderTotal%></p>
-            <P>Total tax: <%=orderTotal*0.15%></P>
-            <p>Order total: <%=orderTotal + (orderTotal*0.15)%></p>
-            <form action="placeOrder" method="POST">
-                <label class="container">Pick-up
-                    <input required="true" type="radio" id="basetype" name="deliveryM" value="Pick-up">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="container">Delivery
-                    <input required="true" type="radio" id="basetype" name="deliveryM" value="Delivery">
-                    <span class="checkmark"></span>
-                </label>
-                <input type="text" name="AdditionalNote">
-                <input type="submit" value="Place order">
-                
-            </form>
-        </div>
     </div>
-
+    <div>
+        <h1>Order total</h1>
+        <p>Order total before tax: <%=orderTotal%></p>
+        <P>Total tax: <%=orderTotal*0.15%></P>
+        <p>Order total: <%=orderTotal + (orderTotal*0.15)%></p>
+        <form action="placeOrder" method="POST">
+            <label class="container">Pick-up
+                <input required="true" type="radio" id="basetype" name="deliveryM" value="Pick-up">
+                <span class="checkmark"></span>
+            </label>
+            <label class="container">Delivery
+                <input required="true" type="radio" id="basetype" name="deliveryM" value="Delivery">
+                <span class="checkmark"></span>
+            </label>
+            <input type="text" name="AdditionalNote"><br>
+            <input type="submit" value="Place order">
+            
+        </form>
+    </div>
     
     <script src="index.js" charset="UTF-8"></script>
 </body>

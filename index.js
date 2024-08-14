@@ -70,15 +70,37 @@ app.get("/home", async(req, res)=>{
     if (req.isAuthenticated()) {
         const user = req.user.email
         const inCart =await getCartItems(user)
-        console.log(req.user.email)
+        const pizza1=await returnPizzaInfo(3)
+        const pizza2=await returnPizzaInfo(7)
+        const pizza3=await returnPizzaInfo(11)
         res.render("home.ejs",{
-            cartItems:inCart
+            cartItems:inCart,
+            special1:pizza1,
+            special2:pizza2,
+            special3:pizza3
         })
     } else {
         res.redirect("/login");
     }
 
 });
+app.post("/home", async(req, res)=>{
+  if (req.isAuthenticated()) {
+    const user = req.user.email
+    const inCart =await getCartItems(user)
+    const pizza1=await returnPizzaInfo(3)
+    const pizza2=await returnPizzaInfo(7)
+    const pizza3=await returnPizzaInfo(11)
+    res.render("home.ejs",{
+        cartItems:inCart,
+        special1:pizza1,
+        special2:pizza2,
+        special3:pizza3
+    })
+  } else {
+      res.redirect("/login");
+  }
+})
 
 app.get("/menu", async (req, res)=>{
     if (req.isAuthenticated()) {
@@ -211,7 +233,7 @@ app.post("/deletePizza", async(req, res)=>{
             const user = result.rows[0];
             req.login(user, (err) => {
               console.log("success");
-              res.redirect("/secrets");
+              res.redirect("/home");
             });
           }
         });
@@ -238,14 +260,17 @@ app.post("/deletePizza", async(req, res)=>{
             } else {
               if (valid) {
                 //Passed password check
+                console.log("user logged in")
                 return cb(null, user);
               } else {
                 //Did not pass password check
+                console.log("user not logged in")
                 return cb(null, false);
               }
             }
           });
         } else {
+          console.log("user not found")
           return cb("User not found");
         }
       } catch (err) {
@@ -291,7 +316,6 @@ app.listen(port, ()=>{
 })
 
 // Functions
-
 async function deletePizza(order_id) {
   await db.query("DELETE FROM currentorderinfo WHERE id = ($1)",[order_id])
 }

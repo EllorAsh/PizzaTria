@@ -7,11 +7,17 @@
 </head>
 <body>
     <div>
-        <form action="/home" method="POST">
-            <input type="email"/>
-            <input type="password"/>
-            <input type="submit"/>
-        </form>
+        <form action="/login" method="POST">
+            <div>
+              <label for="email">Email</label>
+              <input type="email" name="username">
+            </div>
+            <div>
+              <label for="password">Password</label>
+              <input type="password" name="password">
+            </div>
+            <button type="submit">Login</button>
+          </form>
         <a href="/auth/google" role="button">
             Sign In with Google
         </a>

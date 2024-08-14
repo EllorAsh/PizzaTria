@@ -40,8 +40,8 @@ body{
 .navOption{
     font-size: 9pt;
     padding: 0;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
     text-decoration: none;
     color:black;
     margin: 0%;
@@ -94,9 +94,16 @@ body{
     width: 80%;
     transform-origin: center;
     animation:rotate 50s linear infinite;
+    overflow: hidden;
 }
-.Specials{
-    width: 100vw;
+.SpecialsText{
+    background: image-set("./Assets/Specials.jpg");
+    margin: 0px;
+    background-size: cover;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    color: whitesmoke;
 }
 .SpecialsTop{
     background-color:#B45318;
@@ -104,17 +111,10 @@ body{
     padding: 20px;
     margin: 0px;
 }
-.SpecialsText{
-    height: fit-content;
-    background: image-set("./Assets/HomePagePizza_img2.png");
-    background-size: cover;
-    text-align: center;
-}
 
 .currentSpecialsContainer{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     padding-bottom: 20px;
 }
 .pizzaList{
@@ -125,12 +125,13 @@ body{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
-.currentSpecialCard, .pizzaCard{
+.pizzaCard{
     display: flex;
     flex-direction: column;
-    background-color: #646363;
-    width: 180px;
+    background-color: rgba(100,99,99, 0.8);
+    width: 170px;
     margin: 5px;
+    border-radius: 12px;
 }
 .cardImage{
     height: 170px;
@@ -149,12 +150,12 @@ body{
     }
 }
 .pizzaDescription{
-    width:170px;
+    width:160px;
     position: absolute;
     height: fit-content;
     opacity: 0;
-    background: rgba(180, 83, 24,0.8);
-    color: white;
+    background: rgba(180, 83, 24,0.9);
+    color: black;
     padding: 5px;
     font-size: 11pt;
 }
@@ -358,11 +359,15 @@ body{
 .typeIcon{
     padding: 3px;
 }
-.menuHeaderImgBG{
-    height: 200px;
+.menuCategoryImg{
+    height: fit-content;
+}
+.menuCategory{
+    background-color: rgba(47,51,53, 0.7);
+    height: fit-content;
 }
 .menuHeader{
-    background-color: #2f3335;
+    background-color: rgb(33, 33, 33);
     height: 70px;
 }
 .menuH1{
@@ -370,7 +375,7 @@ body{
     text-align: center;
     color: whitesmoke;
     position: relative;
-    top: -30px;
+    top: -10px;
 }
 .pizzasInOrderContainer{
     display: flex;
@@ -447,16 +452,9 @@ body{
     }
 }
 @media (min-width : 800px)and (max-width:1400px){
-    .pizzaCard{
-        scale: 120%;
-        margin-top: 35px;
-        margin-bottom: 35px;
-        margin-left: 25px;
-        margin-right: 25px;
-    }
     .pizzasContainer{
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 @media (min-width : 600px)and (max-width:800px){

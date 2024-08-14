@@ -46,31 +46,97 @@
         <div class="PizzaDisplayText">
             <h2 class="PizzaDisplayH">Have a <span class="standout">pizzalicious</span> experience!</h2>
             <p class="PizzaDisplayB">
-                Try our Grilled Chicken Pizza.
+                
             </p>
         </div> 
     </div>
     <div class="Specials">
+        <div class="SpecialsTop">
+            <h2 class="noMargin">Grilled Chicken Pizza</h2>
+            <p class="noMargin">Savor the flavors of a mouthwatering grilled chicken pizza topped with vibrant peppers, juicy tomatoes, and a generous amount of gooey cheese.</p>
+        </div>
         <div class="SpecialsText">
-            <div class="SpecialsTop">
-                <h2 class="noMargin">Grilled Chicken Pizza</h2>
-                <p class="noMargin">Savor the flavors of a mouthwatering grilled chicken pizza topped with vibrant peppers, juicy tomatoes, and a generous amount of gooey cheese.</p>
-            </div>
             <div class="SpecialsList">
-                <h1>Try our Specials</h1>
+                <h1>Try our Favourites</h1>
                 <div class="currentSpecialsContainer">
                     <form action="/pizzaview" method="POST">
                         <div class="pizzaCard">
-                            <img class="cardImage" src="...">
-                            <p class="pizzaDescription">Description</p>
-                            <p class="pizzaName">Name</p>
+                            <img class="cardImage" src="./Assets/<%=special1.name%>_nbg.png">
+                            <p class="pizzaDescription"><%=special1.short_description%></p>  
+                            <%if(special1.type=="v"){%>
+                                <div class="pizzaType">
+                                    <svg class="typeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                        <path d="M512 32c0 113.6-84.6 207.5-194.2 222c-7.1-53.4-30.6-101.6-65.3-139.3C290.8 46.3 364 0 448 0l32 0c17.7 0 32 14.3 32 32zM0 96C0 78.3 14.3 64 32 64l32 0c123.7 0 224 100.3 224 224l0 32 0 160c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-160C100.3 320 0 219.7 0 96z"/>
+                                    </svg>
+                                </div>
+                            <%}%>    
+                            <%if(special1.type=="s"){%>
+                                <div class="pizzaType">
+                                    <svg class="typeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                        <path d="M428.3 3c11.6-6.4 26.2-2.3 32.6 9.3l4.8 8.7c19.3 34.7 19.8 75.7 3.4 110C495.8 159.6 512 197.9 512 240c0 18.5-3.1 36.3-8.9 52.8c-6.1 17.3-28.5 16.3-36.8-.1l-11.7-23.4c-4.1-8.1-12.4-13.3-21.5-13.3L360 256c-13.3 0-24-10.7-24-24l0-80c0-13.3-10.7-24-24-24l-17.1 0c-21.3 0-30-23.9-10.8-32.9C304.7 85.4 327.7 80 352 80c28.3 0 54.8 7.3 77.8 20.2c5.5-18.2 3.7-38.4-6-55.8L419 35.7c-6.4-11.6-2.3-26.2 9.3-32.6zM171.2 345.5L264 160l40 0 0 80c0 26.5 21.5 48 48 48l76.2 0 23.9 47.8C372.3 443.9 244.3 512 103.2 512l-58.8 0C19.9 512 0 492.1 0 467.6c0-20.8 14.5-38.8 34.8-43.3l49.8-11.1c37.6-8.4 69.5-33.2 86.7-67.7z"/>
+                                    </svg>
+                                </div>
+                            <%}%> 
+                            <p class="pizzaName"><%=special1.name%></p>
                             <div class="cardPrice">
-                                <p class="pizzaPrice">R</p>
+                                <p class="pizzaPrice">R<%=special1.price%></p>
                             </div> 
-                        <input name="PizzaId" hidden="true" value=""/>
+                        <input name="PizzaId" hidden="true" value="<%=special1.id%>"/>
                         <input class="orderNowButton" type="submit" value="Order Now"/> 
                         </div>                                              
-                    </form>
+                    </form> 
+                    <form action="/pizzaview" method="POST">
+                        <div class="pizzaCard">
+                            <img class="cardImage" src="./Assets/<%=special2.name%>_nbg.png">
+                            <p class="pizzaDescription"><%=special2.short_description%></p>  
+                            <%if(special2.type=="v"){%>
+                                <div class="pizzaType">
+                                    <svg class="typeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                        <path d="M512 32c0 113.6-84.6 207.5-194.2 222c-7.1-53.4-30.6-101.6-65.3-139.3C290.8 46.3 364 0 448 0l32 0c17.7 0 32 14.3 32 32zM0 96C0 78.3 14.3 64 32 64l32 0c123.7 0 224 100.3 224 224l0 32 0 160c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-160C100.3 320 0 219.7 0 96z"/>
+                                    </svg>
+                                </div>
+                            <%}%>    
+                            <%if(special2.type=="s"){%>
+                                <div class="pizzaType">
+                                    <svg class="typeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                        <path d="M428.3 3c11.6-6.4 26.2-2.3 32.6 9.3l4.8 8.7c19.3 34.7 19.8 75.7 3.4 110C495.8 159.6 512 197.9 512 240c0 18.5-3.1 36.3-8.9 52.8c-6.1 17.3-28.5 16.3-36.8-.1l-11.7-23.4c-4.1-8.1-12.4-13.3-21.5-13.3L360 256c-13.3 0-24-10.7-24-24l0-80c0-13.3-10.7-24-24-24l-17.1 0c-21.3 0-30-23.9-10.8-32.9C304.7 85.4 327.7 80 352 80c28.3 0 54.8 7.3 77.8 20.2c5.5-18.2 3.7-38.4-6-55.8L419 35.7c-6.4-11.6-2.3-26.2 9.3-32.6zM171.2 345.5L264 160l40 0 0 80c0 26.5 21.5 48 48 48l76.2 0 23.9 47.8C372.3 443.9 244.3 512 103.2 512l-58.8 0C19.9 512 0 492.1 0 467.6c0-20.8 14.5-38.8 34.8-43.3l49.8-11.1c37.6-8.4 69.5-33.2 86.7-67.7z"/>
+                                    </svg>
+                                </div>
+                            <%}%> 
+                            <p class="pizzaName"><%=special2.name%></p>
+                            <div class="cardPrice">
+                                <p class="pizzaPrice">R<%=special2.price%></p>
+                            </div> 
+                        <input name="PizzaId" hidden="true" value="<%=special2.id%>"/>
+                        <input class="orderNowButton" type="submit" value="Order Now"/> 
+                        </div>                                              
+                    </form> 
+                    <form action="/pizzaview" method="POST">
+                        <div class="pizzaCard">
+                            <img class="cardImage" src="./Assets/<%=special3.name%>_nbg.png">
+                            <p class="pizzaDescription"><%=special3.short_description%></p>  
+                            <%if(special3.type=="v"){%>
+                                <div class="pizzaType">
+                                    <svg class="typeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                        <path d="M512 32c0 113.6-84.6 207.5-194.2 222c-7.1-53.4-30.6-101.6-65.3-139.3C290.8 46.3 364 0 448 0l32 0c17.7 0 32 14.3 32 32zM0 96C0 78.3 14.3 64 32 64l32 0c123.7 0 224 100.3 224 224l0 32 0 160c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-160C100.3 320 0 219.7 0 96z"/>
+                                    </svg>
+                                </div>
+                            <%}%>    
+                            <%if(special3.type=="s"){%>
+                                <div class="pizzaType">
+                                    <svg class="typeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                        <path d="M428.3 3c11.6-6.4 26.2-2.3 32.6 9.3l4.8 8.7c19.3 34.7 19.8 75.7 3.4 110C495.8 159.6 512 197.9 512 240c0 18.5-3.1 36.3-8.9 52.8c-6.1 17.3-28.5 16.3-36.8-.1l-11.7-23.4c-4.1-8.1-12.4-13.3-21.5-13.3L360 256c-13.3 0-24-10.7-24-24l0-80c0-13.3-10.7-24-24-24l-17.1 0c-21.3 0-30-23.9-10.8-32.9C304.7 85.4 327.7 80 352 80c28.3 0 54.8 7.3 77.8 20.2c5.5-18.2 3.7-38.4-6-55.8L419 35.7c-6.4-11.6-2.3-26.2 9.3-32.6zM171.2 345.5L264 160l40 0 0 80c0 26.5 21.5 48 48 48l76.2 0 23.9 47.8C372.3 443.9 244.3 512 103.2 512l-58.8 0C19.9 512 0 492.1 0 467.6c0-20.8 14.5-38.8 34.8-43.3l49.8-11.1c37.6-8.4 69.5-33.2 86.7-67.7z"/>
+                                    </svg>
+                                </div>
+                            <%}%> 
+                            <p class="pizzaName"><%=special3.name%></p>
+                            <div class="cardPrice">
+                                <p class="pizzaPrice">R<%=special3.price%></p>
+                            </div> 
+                        <input name="PizzaId" hidden="true" value="<%=special3.id%>"/>
+                        <input class="orderNowButton" type="submit" value="Order Now"/> 
+                        </div>                                              
+                    </form> 
                 </div>
             </div>
         </div>
