@@ -3,25 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
+    <!-- Styles -->
+    <link rel="stylesheet" href="./styles.css"/>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&family=Pinyon+Script&display=swap" rel="stylesheet">
+    
 </head>
 <body>
-    <div>
-        <form action="/login" method="POST">
-            <div>
+  <div class="login">
+    <div class="loginBG">
+        <form action="/login" method="POST" class="form">
+            <div class="emailfield">
               <label for="email">Email</label>
               <input type="email" name="username">
             </div>
-            <div>
+            <div class="passwordfield">
               <label for="password">Password</label>
-              <input type="password" name="password">
+              <input type="password" name="password" required="true" maxlength="16">
             </div>
-            <button type="submit">Login</button>
+            <button class="loginBtn" type="submit">Login</button>
           </form>
-        <a href="/auth/google" role="button">
-            Sign In with Google
+        <a href="/auth/google" role="button" class="google">
+          Sign In with Google
         </a>
-    </div>
+        <a href="/register" class="toRegister">Or sign up here.</a>
+    </div>    
+  </div>
+
     
 </body>
 </html>

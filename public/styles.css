@@ -3,6 +3,66 @@ body{
     background-attachment: fixed;
     margin: 0px;
 }
+.login, .register{
+    background: image-set("./Assets/Specials.jpg");
+    margin: 0px;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.loginBG, .registerBG{
+    background-color: rgba(47,51,53, 0.8);
+    height: 50%;
+    width: 30%;
+    padding: 20px;
+    border-radius: 12px;
+}
+.loginBtn, .registerBtn{
+    background-color: #B45318;
+    width: fit-content;
+    border: 0px;
+    border-radius: 12px;
+    padding: 5px;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin: 10px;
+
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    input{
+        border-radius: 10px;
+        padding: 10px;
+        margin: 5px;
+        border: 0px;
+    }
+    label{
+        color: whitesmoke;
+    }
+}
+.google{
+    display: flex;
+    justify-content: center;
+    color: whitesmoke;
+}
+.toRegister, .toLogin{
+    display: flex;
+    justify-content: center;
+    color: whitesmoke;
+}
+.emailfield{
+    display: flex;
+    flex-direction: column;
+}
+.passwordfield{
+    display: flex;
+    flex-direction: column; 
+}
 .noMargin{
     margin: 0%;
 }
