@@ -17,7 +17,9 @@
 <body>
     <div class="Navbar arapey-regular">
         <div class="navTitle">
-            <img src="./Assets/Logo top.png" class="logoNav" alt="PizzaTria Logo"/>
+            <a href="./home" class="logo">
+                <img src="./Assets/Logo top.png" class="logoNav" alt="PizzaTria Logo"/>         
+            </a> 
             <h1 class="PizzaTriaName">PizzaTria</h1>
         </div>
         <div class="navLinks">
@@ -40,6 +42,25 @@
             </a>
         </div>
     </div> 
+    <div class="ordersContainer">
+        <%if(orders){%>
+            <%let totalOrders = 0%>
+            <%orders.forEach(order =>{%>
+                <div class="order">
+                    <p><%=order.id%></p>
+                    <%for (let index = 0; index < pizzasInOrders[totalOrders].length; index++) {%>
+                        <p><%=pizzasInOrders[totalOrders][index]%></p>
+                    <%}%>
+                    <p><%=order.delivery_method%></p>
+                    <p><%=order.cost_before_tax%></p>
+                    <p><%=order.total_tax%></p>
+                    <p><%=order.cost_after_tax%></p>
+                </div>
+                <%totalOrders = totalOrders +1%>
+            <%})%>
+        <%}%>
+
+    </div>
     
 </body>
 </html>

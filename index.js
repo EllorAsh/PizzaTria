@@ -105,10 +105,15 @@ app.post("/home", async(req, res)=>{
 app.get("/menu", async (req, res)=>{
     if (req.isAuthenticated()) {
         const user = req.user.email
-        const Pizzas= await getPizzas();
+        // Pizza categories are Diff, Classic and Pop
+        const pizzasClassic= await getPizzas("Classic");
+        const pizzasPopular= await getPizzas("Pop");
+        const pizzasDifferent= await getPizzas("Diff");
         const inCart =await getCartItems(user)
         res.render("menu.ejs",{
-            pizzas:Pizzas,
+            pizzasC:pizzasClassic,
+            pizzasP:pizzasPopular,
+            pizzasD:pizzasDifferent,
             cartItems:inCart
         })
     }else{
@@ -177,9 +182,14 @@ app.get("/checkout", async(req, res)=>{
 app.get("/profile", async(req, res)=>{
     if (req.isAuthenticated()) {
         const user = req.user.email
+        const userId = await getUserID(user)
+        let orders = await getOrders(userId)
+        let ordersPizzas = fixPizzasPerOrder(orders)
         const inCart =await getCartItems(user)
         res.render("profile.ejs",{
             cartItems:inCart,
+            orders:orders,
+            pizzasInOrders:ordersPizzas,
         })
     }else{
         res.redirect("/login")
@@ -220,7 +230,7 @@ app.post("/deletePizza", async(req, res)=>{
       ]);
   
       if (checkResult.rows.length > 0) {
-        req.redirect("/login");
+        res.redirect("/login");
       } else {
         bcrypt.hash(password, saltRounds, async (err, hash) => {
           if (err) {
@@ -359,8 +369,8 @@ async function getOrder(user) {
     return orders
 }
 
-async function getPizzas(){
-    const result = await db.query("SELECT * FROM pizzas");
+async function getPizzas(category){
+    const result = await db.query("SELECT * FROM pizzas WHERE category=($1)",[category]);
     let allPizzas = [];
     result.rows.forEach((pizza) => {
         allPizzas.push(pizza);
@@ -441,4 +451,33 @@ async function getOrderTotal(user) {
         });        
     }
     return OrderTotal
+}
+
+async function getOrders(userId) {
+  const result = await db.query("SELECT * FROM orders WHERE order_user_id = ($1)",[userId]);
+  let orders =[]
+  result.rows.forEach((order)=>{
+      orders.push(order)
+  });
+  return orders;
+}
+
+async function getUserID(email) {
+  const result = await db.query("SELECT id FROM users WHERE email = ($1)",[email]);
+  let ids =[]
+  result.rows.forEach((id)=>{
+    ids.push(id)
+  })
+  return ids[0].id;
+}
+
+function fixPizzasPerOrder(orders){
+  let ordersPizzas=[]
+  orders.forEach(order=>{
+    console.log(order)
+    let pizzas=order.pizzas.replaceAll('"', '').replaceAll('{', '').replaceAll('}', '').split(',');
+    ordersPizzas.push(pizzas)
+  })
+  console.log(ordersPizzas)
+  return ordersPizzas
 }
