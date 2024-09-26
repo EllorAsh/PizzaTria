@@ -2,12 +2,12 @@
 import express from "express";
 import pg from "pg";
 import bodyParser from "body-parser";
+import session from "express-session";
+import env from "dotenv";
 
 import bcrypt from "bcrypt";
 import passport from "passport";
 import { Strategy } from "passport-local";
-import session from "express-session";
-import env from "dotenv";
 import GoogleStrategy from "passport-google-oauth2";
 
 env.config();
@@ -34,6 +34,7 @@ app.use(
 );
 
 app.use(express.static("./public"));
+
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(passport.initialize());
 app.use(passport.session());
